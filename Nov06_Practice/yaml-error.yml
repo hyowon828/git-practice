@@ -1,9 +1,0 @@
-
-name: YAML error
-on: push
-jobs:
-  run:
-    runs-on: ubuntu-latest
-    steps:
-      -run: echo "YAML Syntax Error" # 오류: - 다음공백 x
-
