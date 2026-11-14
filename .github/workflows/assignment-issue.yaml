@@ -1,0 +1,32 @@
+
+# Assignment: Create a GitHub Issue on Push
+
+name: Assignment - Create Issue on Push
+
+# 1. main 브랜치에 push하면 자동 실행
+on:
+  push:
+    branches:
+      - main
+
+# 2. GitHub Issue 생성 권한
+permissions:
+  issues: write
+
+jobs:
+  create-issue:
+    runs-on: ubuntu-latest
+
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      # 3. GitHub CLI로 Issue 생성
+      - name: Create GitHub Issue
+        run: |
+          gh api \
+            --method POST \
+            "repos/$GITHUB_REPOSITORY/issues" \
+            -f title="Assignment - Push Event Issue" \
+            -f body="This issue was automatically created by GitHub Actions after a push event." \
+            --jq '.html_url'
