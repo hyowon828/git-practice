@@ -1,0 +1,21 @@
+
+name: Conditional Example
+on: workflow_dispatch
+
+jobs:
+  conditional:
+    runs-on: ubuntu-latest
+    steps:
+      # 실행 ID 확인
+      - name: Show Run ID
+        run: echo "Run ID = ${{ github.run_id }}"
+
+      # [실험 1] 조건이 true이므로 실행
+      - name: Print Hello
+        if: ${{ true }}
+        run: echo "Hello"
+
+      # [실험 2] 조건이 false이므로 건너뜀
+      - name: Print Goodbye
+        if: ${{ false }}
+        run: echo "Goodbye"
