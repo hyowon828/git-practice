@@ -1,0 +1,56 @@
+
+name: Hash Experiment
+
+# GitHub Actions에서 수동으로 실행
+on: workflow_dispatch
+
+jobs:
+  hash-experiment:
+    runs-on: ubuntu-latest
+
+    steps:
+      # [실험 1] 파일 생성 전
+      # sample.txt가 없으므로 해시값은 빈 문자열
+      - name: Before File Creation
+        env:
+          HASH_BEFORE: ${{ hashFiles('sample.txt') }}
+        run: |
+          echo "Before: $HASH_BEFORE"
+
+      # [실험 2] 파일 생성
+      # Runner의 작업 공간에 sample.txt 생성
+      - name: Create Sample File
+        run: |
+          echo "Hello GitHub Actions" > sample.txt
+          cat sample.txt
+
+      # [실험 3] 파일 생성 후
+      # 이제 sample.txt가 존재하므로 해시값 출력
+      - name: After File Creation
+        env:
+          HASH_AFTER: ${{ hashFiles('sample.txt') }}
+        run: |
+          echo "After: $HASH_AFTER"
+
+      # [실험 4] 파일 내용 수정
+      # 기존 파일 내용을 다른 문자열로 변경
+      - name: Modify Sample File
+        run: |
+          echo "Hello Modified GitHub Actions" > sample.txt
+          cat sample.txt
+
+      # [실험 5] 수정 후 해시값 비교
+      # 파일 내용이 바뀌었으므로 해시값도 변경
+      - name: After File Modification
+        env:
+          HASH_MODIFIED: ${{ hashFiles('sample.txt') }}
+        run: |
+          echo "Modified: $HASH_MODIFIED"
+
+      # [실험 6] 없는 파일의 해시값
+      # 존재하지 않는 파일은 빈 문자열 반환
+      - name: Missing File Test
+        env:
+          HASH_MISSING: ${{ hashFiles('missing.txt') }}
+        run: |
+          echo "Missing: [$HASH_MISSING]"
