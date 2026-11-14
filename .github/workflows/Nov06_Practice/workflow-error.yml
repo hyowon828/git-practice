@@ -1,0 +1,9 @@
+
+name: Workflow error
+on: push
+job: # 오류 1: jobs가 올바른 키워드 (s 누락)
+  run:
+    run-on: ubuntu-latest # 오류 2: runs-on이 올바른 키워드 (s 누락 및 위치 오류)
+    steps:
+      - run: date
+
