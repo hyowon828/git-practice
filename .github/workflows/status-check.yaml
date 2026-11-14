@@ -14,9 +14,9 @@ jobs:
         if: ${{ success() }}
         run: echo "Previous steps succeeded"
 
-      # 3. 의도적인 오류 발생
+      # 3. 의도적인 오류 발생 -> 수정: 정상 종료
       - name: Fail Step
-        run: exit 1
+        run: exit 0
 
       # 4. 실패 상태 확인
       - name: Failure Test
